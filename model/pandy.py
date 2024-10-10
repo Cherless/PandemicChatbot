@@ -42,12 +42,12 @@ model = ChatbotModel(input_size, hidden_size, output_size, num_layers)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model.to(device)
 
-# criterion = nn.CrossEntropyLoss()  # Pour la classification binaire
-# optimizer = optim.Adam(model.parameters(), lr=learning_rate)  # Optimiseur Adam
+# criterion = nn.CrossEntropyLoss()  #
+# optimizer = optim.Adam(model.parameters(), lr=learning_rate)  # Adam optimizer
 #
-# # Boucle d'entraînement
+# # Training loop
 # for epoch in range(num_epochs):
-#     model.train()  # Passer en mode entraînement
+#     model.train()  # training mode
 #    running_loss = 0.0
 #
 #     for inputs, labels in train_loader:
@@ -59,10 +59,10 @@ model.to(device)
 #         loss = criterion(outputs, labels)
 #
 #         # Backward pass et optimisation
-#         optimizer.zero_grad()  # Remettre les gradients à zéro
-#         loss.backward()  # Rétropropagation
-#         optimizer.step()  # Mise à jour des poids
+#         optimizer.zero_grad()  # gradient to zero
+#         loss.backward()  # retropropagation
+#         optimizer.step()  # updating weights
 #
 #         running_loss += loss.item()
 #
-#         print(f"Époque {epoch + 1}/{num_epochs}, Perte moyenne : {running_loss / len(train_loader)}")
+#         print(f"epoch {epoch + 1}/{num_epochs}, Loss : {running_loss / len(train_loader)}")
