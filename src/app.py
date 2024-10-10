@@ -1,8 +1,9 @@
 import os
+import torch
 from flask import Flask, request, jsonify
 from flask import send_from_directory
 from utils import process_message_pipeline, check_empty_message
-
+from model.pandy import ChatbotModel
 app = Flask(__name__)
 
 @app.route('/favicon.ico')
@@ -22,14 +23,14 @@ def chat():
         user_message = data.get('message', None) #getting the data from the request we sent
 
         check_empty_message(user_message)
-
         processed_message = process_message_pipeline(user_message) #processing the message
 
-        # will add code to generate an answer wit a pretrained model
+
 
         response = { #returning the processed tokens
             "original_message": user_message,
             "processed_message": processed_message
+#            "predicted_class": predicted_class
         }
 
         return jsonify(response), 200
