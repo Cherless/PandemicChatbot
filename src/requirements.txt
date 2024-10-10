@@ -1,0 +1,23 @@
+# Machine Learning
+torch==2.0.1
+transformers==4.33.0
+scikit-learn==1.3.0
+
+# NLP
+nltk==3.8.1
+spacy==3.6.0
+spacy-langdetect==0.1.2
+
+# text preprocessing
+pandas==2.0.3
+numpy==1.25.0
+
+# API
+Flask==2.3.3
+gunicorn==21.0.1
+
+# HTTP requests
+requests==2.31.0
+
+# Tests e
+pytest==7.5.0
