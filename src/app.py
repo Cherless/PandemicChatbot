@@ -1,13 +1,18 @@
-
+import os
 from flask import Flask, request, jsonify
-
+from flask import send_from_directory
 from utils import process_message_pipeline, check_empty_message
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/', methods=['POST', 'GET'])
 def home():
-    return jsonify({"message": "Welcome to the Chatbot API!"}), 200
+    return jsonify({'message':'Welcome to the pandemic Chatbot'})
 
 
 @app.route('/chat', methods=['POST'])
