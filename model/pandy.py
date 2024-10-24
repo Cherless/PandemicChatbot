@@ -5,35 +5,34 @@ from torch.utils.data import DataLoader, TensorDataset
 import pandas as pd
 import numpy as np
 
-# Paramètres du modèle
-input_size = 3  # Trois colonnes en entrée : Cumulative number of case(s), Number of deaths, Number recovered
-hidden_size = 128  # Nombre de neurones dans la couche cachée
-output_size = 1  # On va prédire une seule valeur (par ex. le nombre de morts ou récupérés)
-num_layers = 2  # Nombre de couches LSTM
+# Hyper parameters
+input_size = 3  # nbr of columns in input
+hidden_size = 128  # nbr of neurones in hidden layer
+output_size = 1  # the param to predict
+num_layers = 2
 learning_rate = 0.001
 num_epochs = 100
-batch_size = 32  # Taille du batch
+batch_size = 32
 
 
-# Fonction de chargement du dataset
+#LOAD DATASET
 def load_data(csv_path):
     df = pd.read_csv(csv_path)
 
-    # Convertir les colonnes nécessaires en entrées
+    # convert columns to input entries
     inputs = torch.tensor(df[['Cumulative number of case(s)', 'Number of deaths', 'Number recovered']].values,
                           dtype=torch.float32)
-    # Par exemple, utiliser la colonne 'Number of deaths' comme label (à ajuster si nécessaire)
+
     labels = torch.tensor(df['Number of deaths'].values, dtype=torch.float32)
 
     dataset = TensorDataset(inputs, labels)
     return DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
 
-# Charger le dataset
 train_loader = load_data('../data/SARS/sars_2003_complete_dataset_clean.csv')
 
 
-# Définition du modèle
+# Def model
 class ChatbotModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, num_layers):
         super(ChatbotModel, self).__init__()
@@ -51,18 +50,18 @@ class ChatbotModel(nn.Module):
         return out
 
 
-# Initialiser le modèle
+# Initialize
 model = ChatbotModel(input_size, hidden_size, output_size, num_layers)
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model.to(device)
 
-# Définir la fonction de perte et l'optimiseur
-criterion = nn.MSELoss()  # Utiliser la perte pour régression si on prédit un nombre
+# loss function
+criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-# Boucle d'entraînement
+# training loop
 for epoch in range(num_epochs):
-    model.train()  # Mode entraînement
+    model.train()
     running_loss = 0.0
 
     for inputs, labels in train_loader:
